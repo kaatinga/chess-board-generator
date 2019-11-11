@@ -1,5 +1,8 @@
 # chess-board-generator
-An example of a chess board generator in PNG
+
+The package is a showcase of a chess board generator.
+
+An example of a chess board generator in PNG is below:
 
 ```
 package main
@@ -26,3 +29,6 @@ func main() {
 
 }
 ```
+
+The result:
+![The result](test.png)
