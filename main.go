@@ -1,4 +1,4 @@
-package main
+package DrawChessBoard
 
 import (
 	"image"
@@ -12,6 +12,11 @@ import (
 var img *image.RGBA
 var chessGlyphs, letters image.Image
 
+type piece struct {
+	coordinates image.Point
+	name        string
+}
+
 var grey color.Color = color.RGBA{125, 125, 125, 255}
 var lightGrey color.Color = color.RGBA{230, 230, 230, 255}
 var boardSize = 451
@@ -24,17 +29,11 @@ func drawLine(x1, stepX, x2, y1, stepY, y2 int, colour *color.Color) {
 	}
 }
 
-func placePiece(x, y, step int, piece image.Point) {
-	draw.Draw(img, image.Rect(x, y, x+step, y+step), chessGlyphs, piece, draw.Over)
+func PlacePiece(x, y, step int, piece2place piece) {
+	draw.Draw(img, image.Rect(x, y, x+step, y+step), chessGlyphs, piece2place.coordinates, draw.Over)
 }
 
-func main() {
-
-	file, err := os.Create("someimage.png")
-	if err != nil {
-		log.Println(err)
-	}
-	defer file.Close()
+func Init() {
 
 	// определяем размер картинки и инициализируем холст
 	img = image.NewRGBA(image.Rect(0, 0, boardSize, boardSize))
@@ -72,36 +71,45 @@ func main() {
 	chessGlyphs, _, _ = image.Decode(chessGlyphsSrc)
 	letters, _, _ = image.Decode(lettersSrc)
 
-	// Верхний ряд
+	// Рисуем верхний ряд
 	draw.Draw(img, image.Rect(step, 0, boardSize, step), letters, image.Pt(0, 0), draw.Over)
 
-	// Левый ряд
+	// Рисуем левый ряд
 	for yHead := step; yHead < boardSize+1; yHead = yHead + step {
 		draw.Draw(img, image.Rect(0, yHead, step, yHead+step), letters, image.Pt(yHead-step, step), draw.Over)
 	}
 
-	glyphsArray := map[string]image.Point{
-		"WhiteKing":    image.Pt(0, 50),
-		"WhiteQueen":   image.Pt(50, 50),
-		"WhiteTower":   image.Pt(100, 50),
-		"WhiteOfficer": image.Pt(150, 50),
-		"WhiteHorse":   image.Pt(200, 50),
-		"WhitePawn":    image.Pt(250, 50),
-		"BlackKing":    image.Pt(0, 0),
-		"BlackQueen":   image.Pt(50, 0),
-		"BlackTower":   image.Pt(100, 0),
-		"BlackOfficer": image.Pt(150, 0),
-		"BlackHorse":   image.Pt(200, 0),
-		"BlackPawn":    image.Pt(250, 0),
+	WhiteKing := piece{image.Pt(0, 50), "White King"}
+	WhiteQueen := piece{image.Pt(50, 50), "White Queen"}
+	WhiteTower := piece{image.Pt(100, 50), "White Tower"}
+	WhiteOfficer := piece{image.Pt(150, 50), "White Officer"}
+	WhiteHorse := piece{image.Pt(200, 50), "White Horse"}
+	WhitePawn := piece{image.Pt(250, 50), "White Pawn"}
+	BlackKing := piece{image.Pt(0, 0), "Black King"}
+	BlackQueen := piece{image.Pt(50, 0), "Black Queen"}
+	BlackTower := piece{image.Pt(100, 0), "Black Tower"}
+	BlackOfficer := piece{image.Pt(150, 0), "Black Officer"}
+	BlackHorse := piece{image.Pt(200, 0), "Black Horse"}
+	BlackPawn := piece{image.Pt(250, 0), "Black Pawn"}
+
+	PlacePiece(50, 50, step, WhiteTower)
+	PlacePiece(100, 50, step, WhitePawn)
+	PlacePiece(250, 50, step, BlackTower)
+	PlacePiece(100, 250, step, WhiteHorse)
+	PlacePiece(150, 250, step, WhiteKing)
+	PlacePiece(350, 50, step, BlackKing)
+	PlacePiece(300, 300, step, BlackQueen)
+}
+func Save() {
+
+	file, err := os.Create("someimage.png")
+	if err != nil {
+		log.Println(err)
 	}
+	defer file.Close()
 
-	placePiece(50, 50, step, glyphsArray["WhiteTower"])
-	placePiece(100, 50, step, glyphsArray["WhitePawn"])
-	placePiece(250, 50, step, glyphsArray["BlackTower"])
-	placePiece(100, 250, step, glyphsArray["WhiteHorse"])
-	placePiece(150, 250, step, glyphsArray["WhiteKing"])
-	placePiece(350, 50, step, glyphsArray["BlackKing"])
-	placePiece(300, 300, step, glyphsArray["BlackQueen"])
-
-	png.Encode(file, img)
+	err = png.Encode(file, img)
+	if err != nil {
+		log.Println(err)
+	}
 }
