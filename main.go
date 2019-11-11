@@ -17,6 +17,19 @@ type piece struct {
 	name        string
 }
 
+var WhiteKing piece
+var WhiteQueen piece
+var WhiteTower piece
+var WhiteOfficer piece
+var WhiteHorse piece
+var WhitePawn piece
+var BlackKing piece
+var BlackQueen piece
+var BlackTower piece
+var BlackOfficer piece
+var BlackHorse piece
+var BlackPawn piece
+
 var grey color.Color = color.RGBA{125, 125, 125, 255}
 var lightGrey color.Color = color.RGBA{230, 230, 230, 255}
 var boardSize = 451
@@ -79,26 +92,18 @@ func Init() {
 		draw.Draw(img, image.Rect(0, yHead, step, yHead+step), letters, image.Pt(yHead-step, step), draw.Over)
 	}
 
-	WhiteKing := piece{image.Pt(0, 50), "White King"}
-	WhiteQueen := piece{image.Pt(50, 50), "White Queen"}
-	WhiteTower := piece{image.Pt(100, 50), "White Tower"}
-	WhiteOfficer := piece{image.Pt(150, 50), "White Officer"}
-	WhiteHorse := piece{image.Pt(200, 50), "White Horse"}
-	WhitePawn := piece{image.Pt(250, 50), "White Pawn"}
-	BlackKing := piece{image.Pt(0, 0), "Black King"}
-	BlackQueen := piece{image.Pt(50, 0), "Black Queen"}
-	BlackTower := piece{image.Pt(100, 0), "Black Tower"}
-	BlackOfficer := piece{image.Pt(150, 0), "Black Officer"}
-	BlackHorse := piece{image.Pt(200, 0), "Black Horse"}
-	BlackPawn := piece{image.Pt(250, 0), "Black Pawn"}
-
-	PlacePiece(50, 50, step, WhiteTower)
-	PlacePiece(100, 50, step, WhitePawn)
-	PlacePiece(250, 50, step, BlackTower)
-	PlacePiece(100, 250, step, WhiteHorse)
-	PlacePiece(150, 250, step, WhiteKing)
-	PlacePiece(350, 50, step, BlackKing)
-	PlacePiece(300, 300, step, BlackQueen)
+	WhiteKing = piece{image.Pt(0, 50), "White King"}
+	WhiteQueen = piece{image.Pt(50, 50), "White Queen"}
+	WhiteTower = piece{image.Pt(100, 50), "White Tower"}
+	WhiteOfficer = piece{image.Pt(150, 50), "White Officer"}
+	WhiteHorse = piece{image.Pt(200, 50), "White Horse"}
+	WhitePawn = piece{image.Pt(250, 50), "White Pawn"}
+	BlackKing = piece{image.Pt(0, 0), "Black King"}
+	BlackQueen = piece{image.Pt(50, 0), "Black Queen"}
+	BlackTower = piece{image.Pt(100, 0), "Black Tower"}
+	BlackOfficer = piece{image.Pt(150, 0), "Black Officer"}
+	BlackHorse = piece{image.Pt(200, 0), "Black Horse"}
+	BlackPawn = piece{image.Pt(250, 0), "Black Pawn"}
 }
 func Save() {
 
