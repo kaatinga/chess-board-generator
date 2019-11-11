@@ -31,4 +31,5 @@ func main() {
 ```
 
 The result:
+
 ![The result](test.png)
