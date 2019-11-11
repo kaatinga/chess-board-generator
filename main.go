@@ -46,9 +46,10 @@ func PlacePiece(x, y, step int, piece2place piece) {
 	draw.Draw(img, image.Rect(x, y, x+step, y+step), chessGlyphs, piece2place.coordinates, draw.Over)
 }
 
+// Init() initialises the chess board. Do it first of all
 func Init() {
 
-	// определяем размер картинки и инициализируем холст
+	// определяем размер картинки и инициализируем доску
 	img = image.NewRGBA(image.Rect(0, 0, boardSize, boardSize))
 
 	draw.Draw(img, img.Bounds(), image.Transparent, image.ZP, draw.Src)
@@ -92,6 +93,7 @@ func Init() {
 		draw.Draw(img, image.Rect(0, yHead, step, yHead+step), letters, image.Pt(yHead-step, step), draw.Over)
 	}
 
+	// Формируем массив фигурок для работы
 	WhiteKing = piece{image.Pt(0, 50), "White King"}
 	WhiteQueen = piece{image.Pt(50, 50), "White Queen"}
 	WhiteTower = piece{image.Pt(100, 50), "White Tower"}
@@ -105,9 +107,11 @@ func Init() {
 	BlackHorse = piece{image.Pt(200, 0), "Black Horse"}
 	BlackPawn = piece{image.Pt(250, 0), "Black Pawn"}
 }
-func Save() {
 
-	file, err := os.Create("someimage.png")
+// Save() saves a PNG file, point out a file name
+func Save(fileName string) {
+
+	file, err := os.Create(fileName)
 	if err != nil {
 		log.Println(err)
 	}
