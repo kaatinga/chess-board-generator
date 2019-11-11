@@ -8,7 +8,7 @@ An example of a chess board generator in PNG is below:
 package main
 
 import (
-	Board "chess-board-generator.git"
+	Board "github.com/kaatinga/chess-board-generator"
 )
 
 func main() {
